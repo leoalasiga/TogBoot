@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.als.tog</groupId>
+        <artifactId>tog-boot-project</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>tog-boot-dependencies</artifactId>
+    <packaging>pom</packaging>
+
+
+    <properties>
+        <!--project-->
+        <java.version>1.8</java.version>
+        <project.encoding>UTF-8</project.encoding>
+        <project.build.encoding>UTF-8</project.build.encoding>
+
+        <!--starter-->
+        <!--        <sofa.ark.version>1.1.5</sofa.ark.version>-->
+        <!--        <sofa.lookout.version>1.5.2</sofa.lookout.version>-->
+
+        <!--core-->
+        <!--        <sofa.registry.version>5.4.2</sofa.registry.version>-->
+        <tracer.core.version>3.1.3</tracer.core.version>
+        <rpc.core.version>5.8.3</rpc.core.version>
+
+        <!--2rd lib dependency-->
+        <!--        <sofa.common.tools.version>1.3.11</sofa.common.tools.version>-->
+        <!--        <sofa.bolt.version>1.5.10</sofa.bolt.version>-->
+        <!--        <sofa.hessian.version>3.3.12</sofa.hessian.version>-->
+
+        <!--3rd lib dependency-->
+        <!--FIXME 1.7.36 will cause compatibility problem, see #https://www.slf4j.org/manual.html-->
+        <slf4j.version>1.7.32</slf4j.version>
+        <fastjson.version>1.2.69</fastjson.version>
+        <javassist.version>3.28.0-GA</javassist.version>
+        <guice.version>3.0</guice.version>
+        <guava.version>28.2-jre</guava.version>
+        <zipkin.version>2.11.3</zipkin.version>
+        <zipkin.reporter.version>2.7.7</zipkin.reporter.version>
+        <jackson.version>2.9.10</jackson.version>
+        <jboss.jaxrs.api.version>1.0.2.Final</jboss.jaxrs.api.version>
+        <protobuf.version>3.22.2</protobuf.version>
+
+        <resteasy.version>3.6.3.Final</resteasy.version>
+        <curator.version>4.0.1</curator.version>
+        <dubbo.version>2.6.9</dubbo.version>
+        <zkclient.version>0.11</zkclient.version>
+        <nacos.version>1.0.0</nacos.version>
+        <swagger.version>2.0.0</swagger.version>
+        <protoc.version>3.11.0</protoc.version>
+        <grpc.version>1.28.0</grpc.version>
+        <grpc.common.protos.version>1.17.0</grpc.common.protos.version>
+    </properties>
+
+    <developers>
+        <developer>
+            <name>leoalasiga</name>
+            <email>leoalasiga@icloud.com</email>
+            <url>leoalasiga.github.io</url>
+        </developer>
+    </developers>
+
+    <dependencyManagement>
+        <dependencies>
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-boot-actuator</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-boot-autoconfigure</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-boot-actuator-autoconfigure</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>healthcheck-sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>runtime-sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>isle-sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>test-sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>rpc-sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>tracer-sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>log-sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>startup-sofa-boot</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+            <!-- starter management begin -->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>healthcheck-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>startup-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>runtime-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>test-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>isle-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>rpc-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>tracer-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>log-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-sofa-boot-starter</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-ark-springboot-starter</artifactId>-->
+<!--                <version>${sofa.ark.version}</version>-->
+<!--            </dependency>-->
+            <!-- starter management end -->
+
+            <!-- Ark Plugin Management begin -->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>runtime-sofa-boot-plugin</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>rpc-sofa-boot-plugin</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>tracer-sofa-boot-plugin</artifactId>-->
+<!--                <version>${sofa.boot.version}</version>-->
+<!--            </dependency>-->
+
+            <!--tracer and its extension plugin-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>tracer-core</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>tracer-extensions</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-springmvc-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-httpclient-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-okhttp-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-datasource-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-spring-cloud-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-dubbo-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-dubbo-2.6.x-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-flexible-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-resttmplate-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-zipkin-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-kafkamq-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-rabbitmq-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-rocketmq-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-springmessage-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-redis-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-tracer-mongodb-plugin</artifactId>-->
+<!--                <version>${tracer.core.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>registry-client-all</artifactId>-->
+<!--                <version>${sofa.registry.version}</version>-->
+<!--            </dependency>-->
+
+            <!--rpc-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-rpc-all</artifactId>-->
+<!--                <version>${rpc.core.version}</version>-->
+<!--            </dependency>-->
+
+            <!-- 2nd dependency begin -->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.common</groupId>-->
+<!--                <artifactId>sofa-common-tools</artifactId>-->
+<!--                <version>${sofa.common.tools.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>bolt</artifactId>-->
+<!--                <version>${sofa.bolt.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>hessian</artifactId>-->
+<!--                <version>${sofa.hessian.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-ark-spi</artifactId>-->
+<!--                <version>${sofa.ark.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-ark-archive</artifactId>-->
+<!--                <version>${sofa.ark.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-ark-common</artifactId>-->
+<!--                <version>${sofa.ark.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-ark-tools</artifactId>-->
+<!--                <version>${sofa.ark.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-ark-api</artifactId>-->
+<!--                <version>${sofa.ark.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog</groupId>-->
+<!--                <artifactId>sofa-ark-container</artifactId>-->
+<!--                <version>${sofa.ark.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-api</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-client</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-common</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-core</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-ext-jvm</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-ext-os</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-reg-dropwizard</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-reg-prometheus</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.als.tog.lookout</groupId>-->
+<!--                <artifactId>lookout-reg-server</artifactId>-->
+<!--                <version>${sofa.lookout.version}</version>-->
+<!--            </dependency>-->
+            <!-- 2nd dependency end -->
+
+            <!-- 3rd lib dependency begin -->
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-bom</artifactId>
+                <version>${protobuf.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-multibindings</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>${javassist.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-all</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty-shaded</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-core</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-api</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-context</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-protobuf-lite</artifactId>
+                <version>${grpc.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>protobuf-javalite</artifactId>
+                        <groupId>com.google.protobuf</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.google.api.grpc</groupId>
+                <artifactId>proto-google-common-protos</artifactId>
+                <version>${grpc.common.protos.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>protobuf-java</artifactId>
+                        <groupId>com.google.protobuf</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>api-common</artifactId>
+                        <groupId>com.google.api</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-stub</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.zipkin.zipkin2</groupId>
+                <artifactId>zipkin</artifactId>
+                <version>${zipkin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.zipkin.reporter2</groupId>
+                <artifactId>zipkin-reporter</artifactId>
+                <version>${zipkin.reporter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-jaxrs2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <!--extension dependency -->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-client</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
+            <!-- resteasy -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-netty4</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-client</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-jackson2-provider</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-jaxb-provider</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-jaxrs</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-multipart-provider</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-validator-provider-11</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+
+            <!-- jboss jaxrs api -->
+            <dependency>
+                <groupId>org.jboss.spec.javax.ws.rs</groupId>
+                <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
+                <version>${jboss.jaxrs.api.version}</version>
+            </dependency>
+
+            <!--dubbo-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>javassist</artifactId>
+                        <groupId>org.javassist</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>spring</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.zookeeper</groupId>
+                        <artifactId>zookeeper</artifactId>
+                    </exclusion>
+                </exclusions>
+                <version>${zkclient.version}</version>
+            </dependency>
+
+            <!--nacos-->
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-api</artifactId>
+                <version>${nacos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos.version}</version>
+            </dependency>
+            <!-- 3rd lib dependency end -->
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
