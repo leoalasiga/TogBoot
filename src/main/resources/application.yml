@@ -1,0 +1,8 @@
+server:
+  port: 8888 # 定义自己项目启动端口
+  servlet:
+    context-path: /tog
+spring:
+  application:
+    name: ${APP_NAME:TogBoot}
+
