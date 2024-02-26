@@ -1,0 +1,12 @@
+server:
+  port: 7777 # 定义自己项目启动端口
+  servlet:
+    context-path: /togs
+spring:
+  application:
+    name: ${APP_NAME:TogBoot}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, beans, env, metrics # Actuator默认把所有访问点暴露给JMX，但处于安全原因，只有health和info会暴露给Web。
