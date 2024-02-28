@@ -30,7 +30,7 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <!-- DB 相关 -->
         <druid.version>1.2.21</druid.version>
-        <dm8.jdbc.version>8.1.3.62</dm8.jdbc.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
     </properties>
 
     <dependencies>
@@ -45,16 +45,20 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!--DB 相关-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>druid-spring-boot-starter</artifactId>-->
-<!--            <version>${druid.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.dameng</groupId>-->
-<!--            <artifactId>DmJdbcDriver18</artifactId>-->
-<!--            <version>${dm8.jdbc.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
 
     </dependencies>
 
