@@ -1,6 +1,6 @@
 package com.als.tog.samples.mapper;
 
-import com.als.tog.samples.pojo.User;
+import com.als.tog.samples.pojo.SampleUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author: liujiajie
  * @date: 2024/2/29 14:14
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface SampleUserMapper extends BaseMapper<SampleUser> {
 
 }

@@ -329,6 +329,10 @@ spring:
           result-set-close-after-log-enabled: false
 ```
 
+### 访问监控页面
+
+输入`127.0.0.1/tog/druid`,就可以访问`druid`监控页面
+
 
 
 **参考**：
@@ -428,6 +432,311 @@ server.undertow.direct-buffers=true
 **参考：**
 
 https://blog.51cto.com/u_12660945/5162703
+
+
+
+## 添加lombok
+
+**Lombok概述**
+以前的Java项目中，充斥着太多不友好的代码：POJO的 getter/setter/toString/构造方法；打印日志；I/O流的关闭操作等 等，这些代码既没有技术含量，又影响着代码的美观，Lombok应 运而生。
+
+LomBok可以通过注解，帮助开发人员消除JAVA中尤其是POJO类中 的冗长代码。
+
+**Lombok插件安装 **
+如果IDEA版本在2020.3以上，不需要安装Lombok插件。如果IDEA 版本在2020.3以下，需要安装Lombok插件，安装方法如下：
+
+1、点击Flie->Setting->Plugins
+
+2、搜索Lombok，安装
+
+ **Lombok依赖
+**1、普通maven项目Lombok依赖为：
+
+```xml
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.22</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+2、SpringBoot项目Lombok的引入方式为：
+
+```xml
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <optional>true</optional>
+</dependency>
+```
+
+ Lombok注解_**`@Setter`**、**`@Getter`**
+
+
+ 作用：为类中的属性提供setter/getter方法
+
+ 位置：类上方或属性上方，在属性上方则为属性生成setter/getter 方法，在类上方表示给该类下的所有属性生成setter/getter方法
+
+属性：设置setter和getter访问权限
+
+```java
+//给类下的所有属性添加Setter/Getter
+@Setter
+@Getter
+public class User {
+    //给id属性添加Setter
+    @Setter
+    private Integer id;
+    //给username的setter方法设置私有权限
+    @Setter(AccessLevel.PRIVATE)
+    private String username;
+    //取消password的Getter方法
+    @Getter(AccessLevel.NONE)
+    private String password;
+    private static int age;
+    private final String address = null;
+}
+```
+
+注： 1、static修饰的变量不生成getter和setter方法
+
+​         2、final修饰的变量只生成getter方法
+
+在IDEA中，按住 Alt+7 可以查看Lombok生成的代码
+
+ Lombok注解**`@ToString`**
+
+
+ 作用：生成toString方法，默认情况下它会按顺序打印类名称以及 每个字段。
+
+ 位置：类上方
+
+ 属性：
+
+```java
+//1、exclude：取消某一个或多个变量在toString方法中的显示
+@Setter
+@Getter
+//给User2设置一个toString方法，该方法不会显示password的值
+@ToString(exclude = {"password"})
+public class User2 {
+    private Integer id;
+    private String username;
+    private String password;
+}
+```
+
+ Lombok注解**`@EqualsAndHashCode`**
+
+
+ 判断两个对象是否相等
+
+在Java中，调用equals()可以判断两个对象是否相等。如果类不重写 该方法，则判断两个引用是否指向同一个对象。
+
+如何重写equals()：
+
+1、判断两个引用是否指向同一对象
+
+2、判断引用是否为Null
+
+3、判断两个对象的实际类型是否相等，此时需要调用canEqual()
+
+4、判断两个对象的属性是否相等
+
+而在Set中判断对象是否重复，在调用equals()之前，需要先调用 hashCode()计算hash值。所以判断对象相等需要重写equals()、 canEqual()、hashCode()三个方法。
+
+ @EqualsAndHashCode
+
+作用：生成equals和hashCode、canEqual方法。用于比较两个类 对象是否相同。
+
+位置：类上方
+
+属性：
+
+```java
+//1、exclude： 比较时排除一些属性
+//2、of： 比较时只使用一些属性
+@Setter
+@Getter
+@ToString
+//@EqualsAndHashCode(exclude = {"password"})
+//排除password,只使用id,username对比及计算hash
+@EqualsAndHashCode(of = {"username"})
+//只使用username对比及计算hash
+public class User3 {
+    private Integer id;
+    private String username;
+    private String password;
+}
+```
+
+注意：
+
+1、对比时只使用非静态属性
+
+2、默认仅使用该类定义的属性不比较父类定义的属性
+
+Lombok注解**`@NonNull`** 
+
+
+ 作用：用于方法参数前，表示调用该方法时参数不能为null；用于 属性上方，表示为该属性赋值时值不能为null。
+
+位置：方法参数前或属性上方。
+
+```java
+@Setter
+@Getter
+public class User4 {
+    // 调用构造方法或setter给id赋值时，值不能为null
+    @NonNull
+    private Integer id;
+    private String username;
+    private String password;
+    // 调用sleep方法时，time参数不能为null
+    public void sleep(@NonNull Integer time)
+   {
+        System.out.println("睡觉");
+   }
+}
+```
+
+```java
+// 测试
+@SpringBootTest
+public class UserTest {
+    @Test
+    public void testUser() {
+        User4 user = new User4();
+        user.setId(null);
+        user.sleep(null);
+   }
+}
+```
+
+ Lombok注解**`@NoArgsConstructor`**
+
+
+ 作用：生成无参构造方法
+
+ 位置：类上方
+
+Lombok注解_@RequiredArgsConstructor 
+作用：生成包含final和@NonNull修饰的属性的构造方法
+
+位置：类上方
+
+ Lombok注解**`@AllArgsConstructor`**
+作用：生成全参的构造方法
+
+位置：类上方
+
+```java
+@Setter
+@Getter
+//@NoArgsConstructor // 给类提供无参构造方法
+@RequiredArgsConstructor // 生成两个username和sex参数的构造方法
+@AllArgsConstructor//提供全参构造方法
+public class User5 {
+    @NonNull
+    private Integer id;
+    private String username;
+    private String password;
+    private final String sex;
+}
+```
+
+Lombok注解**`@Data`** 
+
+
+作用：相当于同时添加@Setter、@Getter、@ToString、 @EqualsAndHashCode、 @RequiredArgsConstructor五个注解
+
+位置：类上方 
+
+Lombok注解**`@Builder `**
+作用：提供链式风格创建对象
+
+位置：类上方
+
+```java
+// 同时提供@Setter、@Getter、@ToString、
+@EqualsAndHashCode、@RequiredArgsConstructor
+@Data
+// 提供链式风格创建对象
+@Builder
+public class User6 {
+    @NonNull
+    private Integer id;
+    private String username;
+    private String password;
+}
+// 测试
+@Test
+public void testUser() {
+    User6 user6 = User6.builder()
+       .id(1)
+       .username("itbaizhan")
+       .password("itbaizhan")
+       .build();
+}
+```
+
+Lombok注解**`@Log`**
+
+
+ 作用：在类中生成日志对象，在方法中可以直接使用
+
+ 位置：类上方
+
+```java
+@Data
+@Log4j2
+public class User7 {
+    private Integer id;
+    private String username;
+    private String password;
+    public void sleep(){
+        log.info("调用睡觉方法");
+        System.out.println("睡觉");
+   }
+}
+```
+
+注：针对不同的日志实现产品，有不同的日志注解，使用 @Log 表示使用Java自带的日志功能，除了 @Log ，还可以使用 @Log4j 、 @Log4j2 、 @Slf4j 等注解，来使用不同的日志产品。
+
+Lombok注解**`@Cleanup `**
+
+
+作用：自动关闭资源，如IO流对象。
+
+位置：代码前方
+
+Lombok注解**`@SneakyThrows`** 
+
+
+作用：对方法中异常进行捕捉并抛出
+
+位置：方法上方
+
+```java
+@SneakyThrows
+public void read() {
+    @Cleanup FileInputStream fis = new FileInputStream("");
+
+}
+```
+
+**参考**
+
+https://www.cnblogs.com/holten/p/5729226.html
+
+https://projectlombok.org/
+
+https://github.com/rzwitserloot/lombok
+
+https://blog.csdn.net/m0_58719994/article/details/128128389
+
+
 
 
 
@@ -676,7 +985,7 @@ public class User {
 
 
 
-## @TableField
+#### @TableField
 
 - 描述：字段注解（非主键）
 
@@ -691,16 +1000,6 @@ public class User {
     private String email;
 }
 ```
-
-1
-2
-3
-4
-5
-6
-7
-8
-9
 
 | 属性             | 类型                         | 必须指定 | 默认值                   | 描述                                                         |
 | :--------------- | :--------------------------- | :------- | :----------------------- | :----------------------------------------------------------- |
@@ -718,13 +1017,11 @@ public class User {
 | typeHandler      | Class<? extends TypeHandler> | 否       | UnknownTypeHandler.class | 类型处理器 (该默认值不代表会按照该值生效)                    |
 | numericScale     | String                       | 否       | ""                       | 指定小数点后保留的位数                                       |
 
-
-
 关于`jdbcType`和`typeHandler`以及`numericScale`的说明:
 
 `numericScale`只生效于 update 的 sql. `jdbcType`和`typeHandler`如果不配合`@TableName#autoResultMap = true`一起使用,也只生效于 update 的 sql. 对于`typeHandler`如果你的字段类型和 set 进去的类型为`equals`关系,则只需要让你的`typeHandler`让 Mybatis 加载到即可,不需要使用注解
 
-### [#](https://baomidou.com/pages/223848/#fieldstrategy)[FieldStrategy(opens new window)](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/FieldStrategy.java)
+##### FieldStrategy
 
 | 值                | 描述                                                        |
 | :---------------- | :---------------------------------------------------------- |
@@ -735,9 +1032,7 @@ public class User {
 | DEFAULT           | 追随全局配置                                                |
 | NEVER             | 不加入SQL                                                   |
 
-
-
-### [#](https://baomidou.com/pages/223848/#fieldfill)[FieldFill(opens new window)](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/FieldFill.java)
+##### FieldFill
 
 | 值            | 描述                 |
 | :------------ | :------------------- |
@@ -746,17 +1041,15 @@ public class User {
 | UPDATE        | 更新时填充字段       |
 | INSERT_UPDATE | 插入和更新时填充字段 |
 
-
-
-## [#](https://baomidou.com/pages/223848/#version)[@Version(opens new window)](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/Version.java)
+#### @Version
 
 - 描述：乐观锁注解、标记 `@Version` 在字段上
 
-## [#](https://baomidou.com/pages/223848/#enumvalue)[@EnumValue(opens new window)](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/EnumValue.java)
+#### @EnumValue
 
 - 描述：普通枚举类注解(注解在枚举字段上)
 
-## [#](https://baomidou.com/pages/223848/#tablelogic)[@TableLogic(opens new window)](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/TableLogic.java)
+#### @TableLogic
 
 - 描述：表字段逻辑处理注解（逻辑删除）
 
@@ -765,13 +1058,7 @@ public class User {
 | value  | String | 否       | ""     | 逻辑未删除值 |
 | delval | String | 否       | ""     | 逻辑删除值   |
 
-
-
-## [#](https://baomidou.com/pages/223848/#sqlparser)[@SqlParser (opens new window)](https://gitee.com/baomidou/mybatis-plus/blob/v3.4.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/SqlParser.java)Deprecated
-
-> see [@InterceptorIgnore](https://baomidou.com/pages/223848/#InterceptorIgnore)
-
-## [#](https://baomidou.com/pages/223848/#keysequence)[@KeySequence(opens new window)](https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/KeySequence.java)
+#### @KeySequence
 
 - 描述：序列主键策略 `oracle`
 - 属性：value、dbType
@@ -781,16 +1068,14 @@ public class User {
 | value  | String | 否       | ""           | 序列名                                                       |
 | dbType | Enum   | 否       | DbType.OTHER | 数据库类型，未配置默认使用注入 IKeyGenerator 实现，多个实现必须指定 |
 
-
-
-## [#](https://baomidou.com/pages/223848/#interceptorignore)[@InterceptorIgnore(opens new window)](https://gitee.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/InterceptorIgnore.java)
+#### @InterceptorIgnore
 
 - `value` 值为 `1` | `yes` | `on` 视为忽略，例如 `@InterceptorIgnore(tenantLine = "1")`
 - `value` 值为 `0` | `false` | `off` | `空值不变` 视为正常执行。
 
 > see [插件主体](https://baomidou.com/pages/2976a3/)
 
-## [#](https://baomidou.com/pages/223848/#orderby)[@OrderBy(opens new window)](https://gitee.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-annotation/src/main/java/com/baomidou/mybatisplus/annotation/OrderBy.java)
+#### @OrderBy
 
 - 描述：内置 SQL 默认指定排序，优先级低于 wrapper 条件查询
 
@@ -799,8 +1084,65 @@ public class User {
 | asc  | boolean | 否       | true            | 是否倒序查询   |
 | sort | short   | 否       | Short.MAX_VALUE | 数字越小越靠前 |
 
+### 快速测试
+
+Maven:
+
+```xml
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-boot-starter-test</artifactId>
+    <version>3.5.5</version>
+</dependency>
+```
+
+通过 `@MybatisPlusTest` 可快速编写 Mapper 对应的测试类，实现快速测试代码
+
+```java
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@MybatisPlusTest
+class MybatisPlusSampleTest {
+
+    @Autowired
+    private SampleMapper sampleMapper;
+
+    @Test
+    void testInsert() {
+        Sample sample = new Sample();
+        sampleMapper.insert(sample);
+        assertThat(sample.getId()).isNotNull();
+    }
+}
+```
+
+启动报错`@MybatisPlusTest`报错`Error creating bean with name 'sqlSessionFactory'` ，
+
+```
+Failed to replace DataSource with an embedded database for tests. If you want an embedded database please put a supported one on the classpath or tune the replace attribute of @AutoConfigureTestDatabase.
+```
+
+然后需要修改一下这个Test类，添加`@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)`注解
+
+`@AutoConfigureTestDatabase` 注解是Spring Boot测试中的一个注解，用于配置测试时使用的数据库。具体来说，`replace` 属性是用来指定测试环境中数据库的替代行为。
+
+在你提到的这个例子中，`replace = AutoConfigureTestDatabase.Replace.NONE` 的含义是不要替代测试数据库。也就是说，该注解告诉Spring Boot测试框架不要替换应用程序的数据源配置，而是使用应用程序的实际数据源。这对于希望在测试中使用与生产环境相同的数据库配置的情况很有用。
+
+常见的替代行为选项有：
+
+- `AutoConfigureTestDatabase.Replace.NONE`: 不替代，使用应用程序的实际数据源。
+- `AutoConfigureTestDatabase.Replace.ANY`: 任何情况下都替代应用程序的数据源。
+- `AutoConfigureTestDatabase.Replace.NONE`: 任何情况下都不替代应用程序的数据源。
+- `AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED`: 由Spring Boot自动配置决定是否替代应用程序的数据源。
+
+
 
 **参考**
 
 **mybatis-plus官方文档：** https://baomidou.com/pages/24112f/
+
+
 
