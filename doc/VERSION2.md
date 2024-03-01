@@ -437,20 +437,23 @@ https://blog.51cto.com/u_12660945/5162703
 
 ## 添加lombok
 
-**Lombok概述**
+#### **Lombok概述**
+
 以前的Java项目中，充斥着太多不友好的代码：POJO的 getter/setter/toString/构造方法；打印日志；I/O流的关闭操作等 等，这些代码既没有技术含量，又影响着代码的美观，Lombok应 运而生。
 
 LomBok可以通过注解，帮助开发人员消除JAVA中尤其是POJO类中 的冗长代码。
 
-**Lombok插件安装 **
+#### **Lombok插件安装 **
+
 如果IDEA版本在2020.3以上，不需要安装Lombok插件。如果IDEA 版本在2020.3以下，需要安装Lombok插件，安装方法如下：
 
 1、点击Flie->Setting->Plugins
 
 2、搜索Lombok，安装
 
- **Lombok依赖
-**1、普通maven项目Lombok依赖为：
+####  Lombok依赖
+
+1、普通maven项目Lombok依赖为：
 
 ```xml
 <dependency>
@@ -471,10 +474,11 @@ LomBok可以通过注解，帮助开发人员消除JAVA中尤其是POJO类中 �
 </dependency>
 ```
 
- Lombok注解_**`@Setter`**、**`@Getter`**
+####  Lombok注解
 
+Lombok注解**`@Setter`**、**`@Getter`**
 
- 作用：为类中的属性提供setter/getter方法
+> 作用：为类中的属性提供setter/getter方法
 
  位置：类上方或属性上方，在属性上方则为属性生成setter/getter 方法，在类上方表示给该类下的所有属性生成setter/getter方法
 
@@ -507,8 +511,7 @@ public class User {
 
  Lombok注解**`@ToString`**
 
-
- 作用：生成toString方法，默认情况下它会按顺序打印类名称以及 每个字段。
+> 作用：生成toString方法，默认情况下它会按顺序打印类名称以及 每个字段。
 
  位置：类上方
 
@@ -548,7 +551,7 @@ public class User2 {
 
  @EqualsAndHashCode
 
-作用：生成equals和hashCode、canEqual方法。用于比较两个类 对象是否相同。
+> 作用：生成equals和hashCode、canEqual方法。用于比较两个类 对象是否相同。
 
 位置：类上方
 
@@ -579,8 +582,7 @@ public class User3 {
 
 Lombok注解**`@NonNull`** 
 
-
- 作用：用于方法参数前，表示调用该方法时参数不能为null；用于 属性上方，表示为该属性赋值时值不能为null。
+> 作用：用于方法参数前，表示调用该方法时参数不能为null；用于 属性上方，表示为该属性赋值时值不能为null。
 
 位置：方法参数前或属性上方。
 
@@ -616,18 +618,19 @@ public class UserTest {
 
  Lombok注解**`@NoArgsConstructor`**
 
-
- 作用：生成无参构造方法
+> 作用：生成无参构造方法
 
  位置：类上方
 
-Lombok注解_@RequiredArgsConstructor 
-作用：生成包含final和@NonNull修饰的属性的构造方法
+Lombok注解**`@RequiredArgsConstructor`** 
+
+> 作用：生成包含final和@NonNull修饰的属性的构造方法 
 
 位置：类上方
 
  Lombok注解**`@AllArgsConstructor`**
-作用：生成全参的构造方法
+
+> 作用：生成全参的构造方法
 
 位置：类上方
 
@@ -648,13 +651,13 @@ public class User5 {
 
 Lombok注解**`@Data`** 
 
-
-作用：相当于同时添加@Setter、@Getter、@ToString、 @EqualsAndHashCode、 @RequiredArgsConstructor五个注解
+> 作用：相当于同时添加@Setter、@Getter、@ToString、 @EqualsAndHashCode、 @RequiredArgsConstructor五个注解
 
 位置：类上方 
 
 Lombok注解**`@Builder `**
-作用：提供链式风格创建对象
+
+> 作用：提供链式风格创建对象
 
 位置：类上方
 
@@ -683,8 +686,7 @@ public void testUser() {
 
 Lombok注解**`@Log`**
 
-
- 作用：在类中生成日志对象，在方法中可以直接使用
+> 作用：在类中生成日志对象，在方法中可以直接使用
 
  位置：类上方
 
@@ -706,15 +708,13 @@ public class User7 {
 
 Lombok注解**`@Cleanup `**
 
-
-作用：自动关闭资源，如IO流对象。
+> 作用：自动关闭资源，如IO流对象。
 
 位置：代码前方
 
 Lombok注解**`@SneakyThrows`** 
 
-
-作用：对方法中异常进行捕捉并抛出
+> 作用：对方法中异常进行捕捉并抛出
 
 位置：方法上方
 
@@ -722,7 +722,6 @@ Lombok注解**`@SneakyThrows`**
 @SneakyThrows
 public void read() {
     @Cleanup FileInputStream fis = new FileInputStream("");
-
 }
 ```
 
@@ -1140,9 +1139,286 @@ Failed to replace DataSource with an embedded database for tests. If you want an
 
 
 
+### 核心功能
+
+#### 代码生成器
+
+目前支持两套生成的方式,一套使用SQL查询的方式是兼容旧的代码生成器核心逻辑使用,另一套使用驱动规范来读取元数据的方式,默认的使用元数据查询方式来生成代码,
+
+建议: 如果是已知数据库(无版本兼容问题下)请继续按照原有的SQL查询方式继续使用(见如下代码),如果是新项目或者不支持的数据库类型可以使用元数据查询的方式来进行生成.
+
+```java
+// MYSQL 示例 切换至SQL查询方式,需要指定好dbQuery与typeConvert来生成
+.dataSourceConfig(builder -> builder.databaseQueryClass(SQLQuery.class).typeConvert(new MySqlTypeConvert()).dbQuery(new MySqlQuery())
+```
+
+1
+2
+
+| 查询方式                  | 优点                                                      | 缺点                                                         | 备注                          |
+| ------------------------- | --------------------------------------------------------- | ------------------------------------------------------------ | ----------------------------- |
+| DefaultQuery (元数据查询) | 根据通用接口读取数据库元数据相关信息,对数据库通用性会好点 | 依赖数据库厂商驱动实现                                       | 默认方式,对部分类型处理不太好 |
+| SQLQuery (SQL查询)        | 需要根据数据库编写对应表,主键,字段获取等查询语句          | 通用性不强,同数据库厂商不同版本可能会存在兼容问题(例如H2数据库只支持1.X版本) | 后期不再维护                  |
+
+
+
+元数据查询已知问题:
+
+1.不支持NotLike的方式反向生成表:
+
+不同于SQL过滤,这种需要获取数据库模式下所有表来生成,不考虑支持.
+
+2.无法读取表注释: 
+
++ Mysql链接增加属性 remarks=true&useInformationSchema=true
+
++ Oracle链接增加属性 remarks=true也有些驱动版本说是增加remarksReporting=true
+
++ Sqlserver: 驱动不支持 https://learn.microsoft.com/en-us/sql/connect/jdbc/reference/getcolumns-method-sqlserverdatabasemetadata?view=sql-server-2017
+
+3.PostgreSQL部分类型不好处理: 
+
++ json,jsonb,uuid,xml,money类型生成Object或Double
+
++ json,jsonb,uuid,xml 生成了Object,Mybatis下生成String也无法正常处理映射,只能转换成项目自定义的类型配合自定义TypeHandler来处理
+
++ money生成了Double,这个类型无法处理,就算使用驱动自带的PGmoney类型mybatis处理也会出现问题,处理方式同上,不过这种数据类型最好别用
+
++ 转换成自己需要的类型可以扩展typeConvertHandler来处理(3.5.3.3后增加了typeName获取)
+
+4.Mysql下tinyint字段转换:
+
+当字段长度为1时,无法转换Boolean字段, 建议在指定数据库连接的时候把 &tinyInt1isBit=true 增加上去
+
+当字段长度大于1时,默认转换成Byte,符合类型长度范围,如果想继续转换成Integer.
+
+```java
+     .typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
+         // 兼容旧版本转换成Integer
+         if (JdbcType.TINYINT == metaInfo.getJdbcType()) {
+             return DbColumnType.INTEGER;
+         }
+         return typeRegistry.getColumnType(metaInfo);
+     })
+```
+
+**引入pom依赖**
+
+```xml
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-generator</artifactId>
+    <version>最新版本</version>
+</dependency>
+```
+
+**快速生成**
+
+```java
+FastAutoGenerator.create("url", "username", "password")
+    .globalConfig(builder -> {
+        builder.author("baomidou") // 设置作者
+            .enableSwagger() // 开启 swagger 模式
+            .fileOverride() // 覆盖已生成文件
+            .outputDir("D://"); // 指定输出目录
+    })
+    .dataSourceConfig(builder -> builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
+        int typeCode = metaInfo.getJdbcType().TYPE_CODE;
+        if (typeCode == Types.SMALLINT) {
+            // 自定义类型转换
+            return DbColumnType.INTEGER;
+        }
+        return typeRegistry.getColumnType(metaInfo);
+
+    }))
+    .packageConfig(builder -> {
+        builder.parent("com.baomidou.mybatisplus.samples.generator") // 设置父包名
+            .moduleName("system") // 设置父包模块名
+            .pathInfo(Collections.singletonMap(OutputFile.xml, "D://")); // 设置mapperXml生成路径
+    })
+    .strategyConfig(builder -> {
+        builder.addInclude("t_simple") // 设置需要生成的表名
+            .addTablePrefix("t_", "c_"); // 设置过滤表前缀
+    })
+    .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+    .execute();
+```
+
+**交互式生成**
+
+```java
+FastAutoGenerator.create(DATA_SOURCE_CONFIG)
+    // 全局配置
+    .globalConfig((scanner, builder) -> builder.author(scanner.apply("请输入作者名称？")).fileOverride())
+    // 包配置
+    .packageConfig((scanner, builder) -> builder.parent(scanner.apply("请输入包名？")))
+    // 策略配置
+    .strategyConfig((scanner, builder) -> builder.addInclude(getTables(scanner.apply("请输入表名，多个英文逗号分隔？所有输入 all")))
+                        .controllerBuilder().enableRestStyle().enableHyphenStyle()
+                        .entityBuilder().enableLombok().addTableFills(
+                                new Column("create_time", FieldFill.INSERT)
+                        ).build())
+    /*
+        模板引擎配置，默认 Velocity 可选模板引擎 Beetl 或 Freemarker
+       .templateEngine(new BeetlTemplateEngine())
+       .templateEngine(new FreemarkerTemplateEngine())
+     */
+    .execute();
+
+
+// 处理 all 情况
+protected static List<String> getTables(String tables) {
+    return "all".equals(tables) ? Collections.emptyList() : Arrays.asList(tables.split(","));
+}
+```
+
+这边是网上找来的一个api的解析，还算清楚
+
+```java
+        /**
+         * 先配置数据源
+         */
+        MySqlQuery mySqlQuery = new MySqlQuery() {
+            @Override
+            public String[] fieldCustom() {
+                return new String[]{"Default"};
+            }
+        };
+
+
+        DataSourceConfig dsc = new DataSourceConfig.Builder("jdbc:mysql://localhost:3306/tog?&useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai", "tog", "Tog@666")
+                .dbQuery(mySqlQuery).build();
+        //通过datasourceConfig创建AutoGenerator
+        AutoGenerator generator = new AutoGenerator(dsc);
+
+        /**
+         * 全局配置
+         */
+        String projectPath = System.getProperty("user.dir"); //获取项目路径
+        String filePath = projectPath + "/src/main/java";  //java下的文件路径
+        GlobalConfig global = new GlobalConfig.Builder()
+                .outputDir(filePath)//生成的输出路径
+                .author("liujiajie")//生成的作者名字
+                //.enableSwagger()开启swagger，需要添加swagger依赖并配置
+                .dateType(DateType.TIME_PACK)//时间策略
+                .commentDate("yyyy年MM月dd日")//格式化时间格式
+                .disableOpenDir()//禁止打开输出目录，默认false
+//                        .fileOverride()//覆盖生成文件 3.5.5已经没有这个方法了
+                .build();
+
+        /**
+         * 包配置
+         */
+        PackageConfig packages = new PackageConfig.Builder()
+                .entity("entity")//实体类包名
+                .parent("com.als.tog")//父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
+                .controller("controller")//控制层包名
+                .mapper("dao")//mapper层包名
+                .xml("mapper.xml")//数据访问层xml包名
+                .service("service")//service层包名
+                .serviceImpl("service.impl")//service实现类包名
+                .pathInfo(Collections.singletonMap(OutputFile.xml, projectPath + "/src/main/resources/mapper")) //路径配置信息,就是配置各个文件模板的路径信息,这里以mapper.xml为例
+                .build();
+        /**
+         * 模板配置
+         */
+
+        // 如果模板引擎是 freemarker
+//        String templatePath = "/templates/mapper.xml.ftl";
+//         如果模板引擎是 velocity
+        // String templatePath = "/templates/mapper.xml.vm";
+
+
+        TemplateConfig template = new TemplateConfig.Builder()
+//            .disable()//禁用所有模板
+                //.disable(TemplateType.ENTITY)禁用指定模板
+//                .service(filePath + "/service.java")//service模板路径
+//                .serviceImpl(filePath + "/service/impl/serviceImpl.java")//实现类模板路径
+//                .mapper(filePath + "/mapper.java")//mapper模板路径
+//                .mapperXml("/templates/mapper.xml")//xml文件模板路路径
+//                .controller(filePath + "/controller")//controller层模板路径
+                .build();
+
+        /**
+         * 注入配置,自定义配置一个Map对象
+         */
+//    Map<String,Object> map = new HashMap<>();
+//        map.put("name","young");
+//        map.put("age","22");
+//        map.put("sex","男");
+//        map.put("description","深情不及黎治跃");
+//
+//    InjectionConfig injectionConfig = new InjectionConfig.Builder()
+//            .customMap(map)
+//            .build();
+
+        /**
+         * 策略配置开始
+         */
+        StrategyConfig strategyConfig = new StrategyConfig.Builder()
+                .enableCapitalMode()//开启全局大写命名
+                //.likeTable()模糊表匹配
+                .addInclude()//添加表匹配，指定要生成的数据表名，不写默认选定数据库所有表
+                //.disableSqlFilter()禁用sql过滤:默认(不使用该方法）true
+                //.enableSchema()启用schema:默认false
+
+                .entityBuilder() //实体策略配置
+                //.disableSerialVersionUID()禁用生成SerialVersionUID：默认true
+                .enableChainModel()//开启链式模型
+                .enableLombok()//开启lombok
+                .enableRemoveIsPrefix()//开启 Boolean 类型字段移除 is 前缀
+                .enableTableFieldAnnotation()//开启生成实体时生成字段注解
+                //.addTableFills()添加表字段填充
+                .naming(NamingStrategy.underline_to_camel)//数据表映射实体命名策略：默认下划线转驼峰underline_to_camel
+                .columnNaming(NamingStrategy.underline_to_camel)//表字段映射实体属性命名规则：默认null，不指定按照naming执行
+                .idType(IdType.AUTO)//添加全局主键类型
+                .formatFileName("%s")//格式化实体名称，%s取消首字母I
+                .build()
+
+                .mapperBuilder()//mapper文件策略
+                .enableMapperAnnotation()//开启mapper注解
+                .enableBaseResultMap()//启用xml文件中的BaseResultMap 生成
+                .enableBaseColumnList()//启用xml文件中的BaseColumnList
+                //.cache(缓存类.class)设置缓存实现类
+                .formatMapperFileName("%sMapper")//格式化Dao类名称
+                .formatXmlFileName("%sMapper")//格式化xml文件名称
+                .build()
+
+                .serviceBuilder()//service文件策略
+                .formatServiceFileName("%sService")//格式化 service 接口文件名称
+                .formatServiceImplFileName("%sServiceImpl")//格式化 service 接口文件名称
+                .build()
+
+                .controllerBuilder()//控制层策略
+                //.enableHyphenStyle()开启驼峰转连字符，默认：false
+                .enableRestStyle()//开启生成@RestController
+                .formatFileName("%sController")//格式化文件名称
+                .build();
+        /*至此，策略配置才算基本完成！*/
+
+        /**
+         * 将所有配置项整合到AutoGenerator中进行执行
+         */
+
+
+        generator.global(global)
+                .template(template)
+//                .injection(injectionConfig)
+                .packageInfo(packages)
+                .strategy(strategyConfig)
+                .execute();
+
+```
+
+
+
 **参考**
 
 **mybatis-plus官方文档：** https://baomidou.com/pages/24112f/
+
+**源码**：https://github.com/baomidou/mybatis-plus
+
+
 
 
 
