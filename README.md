@@ -22,3 +22,9 @@
 | [v0.0.2](doc/VERSION2.md) | 来源若依，引入连接池等，完成基本的用户登录认证 |
 |                           |                         |
 
+
+# 项目的待办列表
+[ToDoList](doc/TODOLIST.md)
+
+# 项目的bug记录
+[bug记录](doc/BUG.md)

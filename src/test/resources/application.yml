@@ -24,41 +24,41 @@ spring:
   # 数据源配置项
   datasource:
     url: ${DB_URL:jdbc:jdbc:mysql://127.0.0.1:3306/tog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&nullCatalogMeansCurrent=false}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USER:tog}
     password: ${DB_PWD:Tog@6666}
-    druid: # Druid 【监控】相关的全局配置
-      web-stat-filter:
-        enabled: true
-      stat-view-servlet:
-        enabled: true
-        allow: # 设置白名单，不填则允许所有访问
-        url-pattern: /druid/*
-        login-username: tog # 控制台管理用户名和密码
-        login-password: Tog@6666
-      filter:
-        stat:
-          enabled: true
-          log-slow-sql: true # 慢 SQL 记录
-          slow-sql-millis: 1000
-          merge-sql: true # 合并sql
-        wall:
-          config:
-            multi-statement-allow: true
-        # 配置日志输出
-        slf4j:
-          enabled: true
-          connection-close-after-log-enabled: false
-          statement-close-after-log-enabled: false
-          result-set-open-after-log-enabled: false
-          result-set-close-after-log-enabled: false
-# spring actuator配置
-management:
-  endpoints:
-    web:
-      exposure:
-        include: info, health, beans, env, metrics # Actuator默认把所有访问点暴露给JMX，但处于安全原因，只有health和info会暴露给Web。
-# 日志等级
-logging:
-  level:
-    root: info
+#    druid: # Druid 【监控】相关的全局配置
+#      web-stat-filter:
+#        enabled: true
+#      stat-view-servlet:
+#        enabled: true
+#        allow: # 设置白名单，不填则允许所有访问
+#        url-pattern: /druid/*
+#        login-username: tog # 控制台管理用户名和密码
+#        login-password: Tog@6666
+#      filter:
+#        stat:
+#          enabled: true
+#          log-slow-sql: true # 慢 SQL 记录
+#          slow-sql-millis: 1000
+#          merge-sql: true # 合并sql
+#        wall:
+#          config:
+#            multi-statement-allow: true
+#        # 配置日志输出
+#        slf4j:
+#          enabled: true
+#          connection-close-after-log-enabled: false
+#          statement-close-after-log-enabled: false
+#          result-set-open-after-log-enabled: false
+#          result-set-close-after-log-enabled: false
+## spring actuator配置
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: info, health, beans, env, metrics # Actuator默认把所有访问点暴露给JMX，但处于安全原因，只有health和info会暴露给Web。
+## 日志等级
+#logging:
+#  level:
+#    root: info

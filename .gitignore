@@ -48,4 +48,5 @@ nbdist/
 ### JRebel ###
 rebel.xml
 
-
+# 项目日志
+/logs/
