@@ -28,7 +28,7 @@ public class XgdsbController {
 
     @PostMapping("/test")
     public Map test(@RequestBody  TestForm form) {
-        xgdsbService.sbljj(form);
+        xgdsbService.test(form);
         Map<String,String> hashMap = new HashMap();
         hashMap.put("111","111");
         return hashMap;

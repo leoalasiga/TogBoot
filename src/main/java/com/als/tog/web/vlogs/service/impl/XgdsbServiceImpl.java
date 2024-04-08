@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements XgdsbService {
 
     @Override
-    public void sbljj(TestForm form) {
+    public void test(TestForm form) {
         log.info("方法开始————————————————————————————");
         log.info("我叫{}————————————————————————————",form.getName());
         Xgdsb xgdsb = baseMapper.selectById(1L);

@@ -13,7 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024年04月08日
  */
 public interface XgdsbService extends IService<Xgdsb> {
-
-    void sbljj(TestForm form);
+    void test(TestForm form);
 
 }
