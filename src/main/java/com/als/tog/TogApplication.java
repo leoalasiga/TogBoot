@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date: 2024/2/21 11:15
  */
 @SpringBootApplication
-@MapperScan("com.als.tog.samples.mapper")
+@MapperScan("com.als.tog.web")
 public class TogApplication {
     public static void main(String[] args) {
         SpringApplication.run(TogApplication.class,args);
