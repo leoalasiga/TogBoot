@@ -27,6 +27,23 @@ spring:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USER:tog}
     password: ${DB_PWD:Tog@6666}
+#################### 接口文档配置 ####################
+swagger:
+  application:
+    name: togBoot
+    enable: true
+knife4j:
+  # 开启增强配置
+  enable: true
+  # 是否开启生产环境屏蔽   true:关闭swagger，false:开启swagger
+  production: false
+  basic:
+    # 是否开启认证
+    enable: false
+    # Basic认证用户名
+    username: tog
+    # Basic认证密码
+    password: Tog@13579
 #    druid: # Druid 【监控】相关的全局配置
 #      web-stat-filter:
 #        enabled: true

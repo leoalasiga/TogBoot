@@ -2,7 +2,10 @@ package com.als.tog.web.vlogs.service;
 
 import com.als.tog.web.vlogs.entity.Xgdsb;
 import com.als.tog.web.vlogs.form.TestForm;
+import com.als.tog.web.vlogs.form.VlogForm;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,6 +16,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024年04月08日
  */
 public interface XgdsbService extends IService<Xgdsb> {
-    void test(TestForm form);
 
+    List test(TestForm form);
+
+    void AddVlog(VlogForm form);
 }
