@@ -1,21 +1,13 @@
-package com.als.tog.web.vlogs.form;
+package com.als.tog.web.vlogs.vo;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author dkw
  */
-@Data
-@ApiModel
-public class VlogForm implements Serializable {
-
-    private static final long serialVersionUID = 7352547705728577742L;
-
+public class VlogsVo {
     @ApiModelProperty("ID")
     private Long id;
 

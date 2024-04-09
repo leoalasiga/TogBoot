@@ -1,7 +1,6 @@
 package com.als.tog.web.vlogs.service.impl;
 
 import com.als.tog.web.vlogs.entity.Xgdsb;
-import com.als.tog.web.vlogs.form.TestForm;
 import com.als.tog.web.vlogs.form.VlogForm;
 import com.als.tog.web.vlogs.mapper.XgdsbMapper;
 import com.als.tog.web.vlogs.service.XgdsbService;
@@ -9,14 +8,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * <p>
- *  服务实现类
- * </p>
- *
- * @author dkw001
+ * @author dkw
  * @since 2024年04月08日
  */
 @Service
@@ -24,18 +20,19 @@ import java.util.List;
 public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements XgdsbService {
 
     @Override
-    public List test(TestForm form) {
-        log.info("方法开始————————————————————————————");
-        log.info("我叫{}————————————————————————————",form.getName());
-        List vlogsList = list();
-        Xgdsb xgdsb = baseMapper.selectById(1L);
-        System.out.println(xgdsb);
-        log.info("方法结束————————————————————————————");
-        return vlogsList;
+    public List<Xgdsb> QueryList(VlogForm form) {
+        List<Xgdsb> list = list();
+        return list;
     }
 
     @Override
     public void AddVlog(VlogForm form){
-
+        Xgdsb xgdsb = new Xgdsb();
+        LocalDateTime now = LocalDateTime.now();
+        xgdsb.setTitle(form.getTitle());
+        xgdsb.setSummary(form.getSummary());
+        xgdsb.setContent(form.getContent());
+        xgdsb.setCreateTime(now);
+        saveOrUpdate(xgdsb);
     }
 }

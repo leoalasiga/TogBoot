@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface XgdsbService extends IService<Xgdsb> {
 
-    List test(TestForm form);
+    List QueryList(VlogForm form);
 
     void AddVlog(VlogForm form);
 }

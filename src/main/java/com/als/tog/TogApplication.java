@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  * @date: 2024/2/21 11:15
  */
 @SpringBootApplication
-@EnableWebMvc
 @MapperScan("com.als.tog.web.**.mapper")
 public class TogApplication {
     public static void main(String[] args) {
