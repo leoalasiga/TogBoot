@@ -35,4 +35,20 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
         xgdsb.setCreateTime(now);
         saveOrUpdate(xgdsb);
     }
+
+    @Override
+    public void DeleteVlog(VlogForm form){
+        removeById(form.getId());
+    }
+
+
+    @Override
+    public void UpdateVlog(VlogForm form){
+        Xgdsb xgdsb = new Xgdsb();
+        xgdsb.setId(form.getId());
+        xgdsb.setTitle(form.getTitle());
+        xgdsb.setSummary(form.getSummary());
+        xgdsb.setContent(form.getContent());
+        saveOrUpdate(xgdsb);
+    }
 }
