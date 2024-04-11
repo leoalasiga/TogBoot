@@ -62,3 +62,6 @@ management:
 logging:
   level:
     root: info
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

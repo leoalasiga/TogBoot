@@ -24,4 +24,13 @@ public class QueryVlogsForm implements Serializable {
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
+
+    @ApiModelProperty("页码")
+    private Integer pageIndex;
+
+    @ApiModelProperty("每页大小")
+    private Integer pageSize;
+
+    @ApiModelProperty("总数")
+    private Integer total;
 }
