@@ -1,9 +1,11 @@
 package com.als.tog.web.vlogs.service.impl;
 
 import com.als.tog.web.vlogs.entity.Xgdsb;
+import com.als.tog.web.vlogs.form.QueryVlogsForm;
 import com.als.tog.web.vlogs.form.VlogForm;
 import com.als.tog.web.vlogs.mapper.XgdsbMapper;
 import com.als.tog.web.vlogs.service.XgdsbService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,16 @@ import java.util.List;
 public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements XgdsbService {
 
     @Override
-    public List<Xgdsb> QueryList(VlogForm form) {
-        List<Xgdsb> list = list();
-        return list;
+    public List<Xgdsb> QueryList(QueryVlogsForm form) {
+        LambdaQueryWrapper<Xgdsb> wrapper = new LambdaQueryWrapper();
+        if(!form.getTitle().isEmpty()){
+            wrapper.like(Xgdsb::getTitle, form.getTitle());
+        }
+        if(!form.getSummary().isEmpty()){
+            wrapper.like(Xgdsb::getSummary, form.getSummary());
+        }
+        wrapper.orderByDesc(Xgdsb::getCreateTime);
+        return baseMapper.selectList(wrapper);
     }
 
     @Override

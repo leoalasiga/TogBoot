@@ -1,6 +1,7 @@
 package com.als.tog.web.vlogs.controller;
 
 import com.als.tog.config.ResultUtil;
+import com.als.tog.web.vlogs.form.QueryVlogsForm;
 import com.als.tog.web.vlogs.form.VlogForm;
 import com.als.tog.web.vlogs.service.XgdsbService;
 import com.als.tog.web.vlogs.vo.VlogsVo;
@@ -24,7 +25,7 @@ public class XgdsbController {
     private XgdsbService xgdsbService;
 
     @PostMapping("/QueryList")
-    public ResultUtil QueryList(@RequestBody  VlogForm form) {
+    public ResultUtil QueryList(@RequestBody QueryVlogsForm form) {
         List<VlogsVo> list = xgdsbService.QueryList(form);
         return ResultUtil.success(list);
     }

@@ -1,6 +1,7 @@
 package com.als.tog.web.vlogs.service;
 
 import com.als.tog.web.vlogs.entity.Xgdsb;
+import com.als.tog.web.vlogs.form.QueryVlogsForm;
 import com.als.tog.web.vlogs.form.VlogForm;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface XgdsbService extends IService<Xgdsb> {
 
-    List QueryList(VlogForm form);
+    List QueryList(QueryVlogsForm form);
 
     void AddVlog(VlogForm form);
 
