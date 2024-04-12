@@ -32,6 +32,8 @@
         <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
         <!-- 统一依赖管理 -->
         <spring.boot.version>2.7.18</spring.boot.version>
+        <!--redis-->
+        <jedis.version>3.7.1</jedis.version>
         <!--工具类相关-->
         <lombok.version>1.18.30</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
@@ -73,6 +75,15 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <!--日志-->
         <dependency>
