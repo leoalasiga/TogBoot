@@ -10,10 +10,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author dkw
@@ -23,8 +23,15 @@ import java.util.List;
 @Slf4j
 public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements XgdsbService {
 
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    public XgdsbServiceImpl(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
     @Override
     public IPage<Xgdsb> QueryList(QueryVlogsForm form) {
+        this.redisTemplate.opsForValue().set("uuid",11111);
         LambdaQueryWrapper<Xgdsb> wrapper = new LambdaQueryWrapper();
         Page<Xgdsb> page=new Page<>(form.getPageIndex(), form.getPageSize());
         if(!form.getTitle().isEmpty()){

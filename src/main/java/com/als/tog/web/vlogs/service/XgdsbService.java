@@ -23,5 +23,6 @@ public interface XgdsbService extends IService<Xgdsb> {
     void AddVlog(VlogForm form);
 
     void DeleteVlog(VlogForm form);
+
     void UpdateVlog(VlogForm form);
 }
