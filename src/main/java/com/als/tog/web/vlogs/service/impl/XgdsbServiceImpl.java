@@ -31,7 +31,9 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
 
     @Override
     public IPage<Xgdsb> QueryList(QueryVlogsForm form) {
-        this.redisTemplate.opsForValue().set("uuid",11111);
+        /** redis用法实例
+        * this.redisTemplate.opsForValue().set("uuid",11111);
+        */
         LambdaQueryWrapper<Xgdsb> wrapper = new LambdaQueryWrapper();
         Page<Xgdsb> page=new Page<>(form.getPageIndex(), form.getPageSize());
         if(!form.getTitle().isEmpty()){
