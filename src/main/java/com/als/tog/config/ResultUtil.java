@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author dkw
+ */
 @Data
 public class ResultUtil<T> {
 
@@ -27,7 +30,12 @@ public class ResultUtil<T> {
      */
     @Setter
     private T data;
-
+    /**
+     * 返回状态
+     */
+    @Getter
+    @Setter
+    private Boolean status;
 
     private ResultUtil() {
 
@@ -37,6 +45,7 @@ public class ResultUtil<T> {
         ResultUtil<T> resultUtil = new ResultUtil<>();
         resultUtil.setCode(SUCCESS_CODE);
         resultUtil.setMessage(SUCCESS_MESSAGE);
+        resultUtil.setStatus(true);
         return resultUtil;
     }
 
@@ -48,8 +57,17 @@ public class ResultUtil<T> {
 
     public static <T> ResultUtil<T> fail() {
         ResultUtil<T> resultUtil = new ResultUtil<>();
+        resultUtil.setStatus(false);
         resultUtil.setCode(FAIL_CODE);
         resultUtil.setMessage(FAIL_MESSAGE);
+        return resultUtil;
+    }
+
+    public static <T> ResultUtil<T> fail(String message) {
+        ResultUtil<T> resultUtil = new ResultUtil<>();
+        resultUtil.setStatus(false);
+        resultUtil.setCode(FAIL_CODE);
+        resultUtil.setMessage(message);
         return resultUtil;
     }
 }

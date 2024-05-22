@@ -23,7 +23,7 @@ spring:
     active: dkw
   # 数据源配置项
   datasource:
-    url: ${DB_URL:jdbc:jdbc:mysql://127.0.0.1:3306/tog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&nullCatalogMeansCurrent=false}
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/tog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&nullCatalogMeansCurrent=false}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USER:tog}
     password: ${DB_PWD:Tog@6666}
