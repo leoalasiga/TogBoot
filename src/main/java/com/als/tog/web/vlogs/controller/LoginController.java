@@ -1,16 +1,14 @@
 package com.als.tog.web.vlogs.controller;
 
 import com.als.tog.config.ResultUtil;
+import com.als.tog.web.vlogs.entity.UserInfo;
 import com.als.tog.web.vlogs.entity.Xgdsb;
 import com.als.tog.web.vlogs.form.LoginForm;
 import com.als.tog.web.vlogs.service.LoginService;
 import com.als.tog.web.vlogs.service.XgdsbService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -28,8 +26,8 @@ public class LoginController {
     @ApiOperation("登录接口")
     @PostMapping("/login")
     public ResultUtil login(@RequestBody LoginForm form) {
-        loginService.login(form);
-        return ResultUtil.success();
+        String token = loginService.login(form);
+        return ResultUtil.success(token);
     }
 
     @ApiOperation("注册接口")
@@ -37,5 +35,13 @@ public class LoginController {
     public ResultUtil register(@RequestBody LoginForm form) {
         loginService.register(form);
         return ResultUtil.success();
+    }
+
+
+    @ApiOperation("获取用户信息")
+    @PostMapping("/getUserInfoByToken")
+    public ResultUtil getUserInfoByToken(String token) {
+        UserInfo userInfo = loginService.getUserInfoByToken(token);
+        return ResultUtil.success(userInfo);
     }
 }

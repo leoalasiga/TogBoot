@@ -1,11 +1,15 @@
 package com.als.tog.web.vlogs.service.impl;
 
+import com.als.tog.web.vlogs.entity.TagsInfo;
 import com.als.tog.web.vlogs.entity.Xgdsb;
+import com.als.tog.web.vlogs.form.AddTagForm;
 import com.als.tog.web.vlogs.form.QueryVlogsForm;
 import com.als.tog.web.vlogs.form.VlogForm;
+import com.als.tog.web.vlogs.mapper.TagsMapper;
 import com.als.tog.web.vlogs.mapper.XgdsbMapper;
 import com.als.tog.web.vlogs.service.XgdsbService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -22,6 +26,7 @@ import java.time.LocalDateTime;
 @Service
 @Slf4j
 public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements XgdsbService {
+    TagsMapper tagsMapper;
 
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -31,9 +36,6 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
 
     @Override
     public IPage<Xgdsb> QueryList(QueryVlogsForm form) {
-        /** redis用法实例
-        * this.redisTemplate.opsForValue().set("uuid",11111);
-        */
         LambdaQueryWrapper<Xgdsb> wrapper = new LambdaQueryWrapper();
         Page<Xgdsb> page=new Page<>(form.getPageIndex(), form.getPageSize());
         if(!form.getTitle().isEmpty()){
@@ -72,4 +74,5 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
         xgdsb.setContent(form.getContent());
         saveOrUpdate(xgdsb);
     }
+
 }

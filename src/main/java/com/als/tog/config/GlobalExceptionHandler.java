@@ -1,14 +1,14 @@
 package com.als.tog.config;
 
 import com.als.tog.Exception.BusinessException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * @author dkw
  * 全局异常处理
  */
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResultUtil<Object> handleBusinessException(BusinessException e) {

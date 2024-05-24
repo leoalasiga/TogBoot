@@ -33,4 +33,7 @@ public class QueryVlogsForm implements Serializable {
 
     @ApiModelProperty("总数")
     private Integer total;
+
+    @ApiModelProperty("标签类型")
+    private Integer tagType;
 }

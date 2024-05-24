@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @since 2024年04月08日
  */
 @Data
-@TableName("xgdsb")
+@TableName("blogInfo")
 public class Xgdsb implements Serializable {
 
     private static final long serialVersionUID = 7193486139257172915L;
@@ -30,6 +30,9 @@ public class Xgdsb implements Serializable {
 
     @TableField("createTime")
     private LocalDateTime createTime;
+
+    @TableField("tagTypes")
+    private String tagTypes;
 
     public Long getId() {
         return id;

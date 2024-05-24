@@ -30,4 +30,7 @@ public class VlogForm implements Serializable {
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
+
+    @ApiModelProperty("标签类型")
+    private String tagTypes;
 }

@@ -2,16 +2,15 @@ package com.als.tog.web.vlogs.controller;
 
 import com.als.tog.config.ResultUtil;
 import com.als.tog.web.vlogs.entity.Xgdsb;
+import com.als.tog.web.vlogs.form.AddTagForm;
 import com.als.tog.web.vlogs.form.QueryVlogsForm;
 import com.als.tog.web.vlogs.form.VlogForm;
+import com.als.tog.web.vlogs.service.TagsService;
 import com.als.tog.web.vlogs.service.XgdsbService;
 import com.als.tog.web.vlogs.vo.VlogsVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,6 +25,9 @@ public class XgdsbController {
 
     @Resource
     private XgdsbService xgdsbService;
+
+    @Resource
+    private TagsService tagsService;
 
     @ApiOperation("博客列表查询")
     @PostMapping("/QueryList")
@@ -52,6 +54,20 @@ public class XgdsbController {
     @PostMapping("/updateVlogs")
     public ResultUtil UpdateVlog(@RequestBody VlogForm form) {
         xgdsbService.UpdateVlog(form);
+        return ResultUtil.success();
+    }
+
+    @ApiOperation("查询标签接口")
+    @GetMapping("/queryTags")
+    public ResultUtil queryTags() {
+        List list = tagsService.QueryTags();
+        return ResultUtil.success(list);
+    }
+
+    @ApiOperation("新增标签接口")
+    @PostMapping("/addTags")
+    public ResultUtil addTags(@RequestBody AddTagForm addTagForm) {
+        tagsService.addTags(addTagForm);
         return ResultUtil.success();
     }
 }
