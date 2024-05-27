@@ -16,8 +16,6 @@ public class TagsInfo {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @TableField("type")
-    private String type;
 
     @TableField("tag")
     private String tag;

@@ -43,8 +43,9 @@ public class JwtUtils {
     // 解析JWT
     public static Claims parseToken(String token) {
         try {
-            return Jwts.parser()
+            return Jwts.parserBuilder()
                     .setSigningKey(SECRET_KEY)
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {

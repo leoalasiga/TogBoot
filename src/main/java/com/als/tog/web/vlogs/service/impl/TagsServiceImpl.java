@@ -26,7 +26,6 @@ public class TagsServiceImpl extends ServiceImpl<TagsMapper, TagsInfo> implement
     public void addTags(AddTagForm addTagForm){
         TagsInfo tagsInfo = new TagsInfo();
         tagsInfo.setTag(addTagForm.getTag());
-        tagsInfo.setType(addTagForm.getType());
         saveOrUpdate(tagsInfo);
     }
 }

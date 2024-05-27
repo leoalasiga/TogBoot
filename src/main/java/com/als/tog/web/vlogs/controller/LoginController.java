@@ -39,8 +39,8 @@ public class LoginController {
 
 
     @ApiOperation("获取用户信息")
-    @PostMapping("/getUserInfoByToken")
-    public ResultUtil getUserInfoByToken(String token) {
+    @GetMapping("/getUserInfoByToken")
+    public ResultUtil getUserInfoByToken(@RequestParam(name = "token") String token) {
         UserInfo userInfo = loginService.getUserInfoByToken(token);
         return ResultUtil.success(userInfo);
     }

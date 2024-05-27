@@ -33,4 +33,10 @@ public class VlogForm implements Serializable {
 
     @ApiModelProperty("标签类型")
     private String tagTypes;
+
+    @ApiModelProperty("用户姓名")
+    private String author;
+
+    @ApiModelProperty("用户id")
+    private String userId;
 }
