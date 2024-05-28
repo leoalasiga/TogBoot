@@ -44,9 +44,9 @@ public class XgdsbController {
     }
 
     @ApiOperation("删除接口")
-    @PostMapping("/deleteVlogs")
-    public ResultUtil deleteVlogs(@RequestBody VlogForm form) {
-        xgdsbService.DeleteVlog(form);
+    @GetMapping("/deleteVlogs")
+    public ResultUtil deleteVlogs(@RequestParam(name = "id") String id) {
+        xgdsbService.DeleteVlog(id);
         return ResultUtil.success();
     }
 

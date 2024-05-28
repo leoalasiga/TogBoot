@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 @Service
 @Slf4j
 public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements XgdsbService {
-    TagsMapper tagsMapper;
 
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -60,8 +59,10 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
     }
 
     @Override
-    public void DeleteVlog(VlogForm form){
-        removeById(form.getId());
+    public void DeleteVlog(String id){
+        LambdaQueryWrapper<Xgdsb> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(Xgdsb::getId,id);
+        baseMapper.delete(lambdaQueryWrapper);
     }
 
 
