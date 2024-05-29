@@ -13,9 +13,6 @@ public class AddTagForm implements Serializable {
 
     private static final long serialVersionUID = -1542386908255169194L;
 
-    @ApiModelProperty("类型")
-    private String type;
-
     @ApiModelProperty("标签")
     private String tag;
 }

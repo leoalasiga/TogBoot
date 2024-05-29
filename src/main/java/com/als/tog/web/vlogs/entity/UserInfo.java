@@ -16,7 +16,7 @@ public class UserInfo implements Serializable {
     private static final long serialVersionUID = -4644066405545577485L;
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
     @TableField("account")
     private String account;

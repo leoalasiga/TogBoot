@@ -17,7 +17,7 @@ public class VlogForm implements Serializable {
     private static final long serialVersionUID = 7352547705728577742L;
 
     @ApiModelProperty("ID")
-    private Long id;
+    private String id;
 
     @ApiModelProperty("标题")
     private String title;
@@ -38,5 +38,5 @@ public class VlogForm implements Serializable {
     private String author;
 
     @ApiModelProperty("用户id")
-    private String userId;
+    private Long userId;
 }

@@ -14,7 +14,7 @@ import lombok.Data;
 public class TagsInfo {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
 
     @TableField("tag")

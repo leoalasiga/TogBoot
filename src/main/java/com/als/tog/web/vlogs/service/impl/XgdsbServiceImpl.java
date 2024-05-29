@@ -1,11 +1,13 @@
 package com.als.tog.web.vlogs.service.impl;
 
 import com.als.tog.web.vlogs.entity.TagsInfo;
+import com.als.tog.web.vlogs.entity.UserInfo;
 import com.als.tog.web.vlogs.entity.Xgdsb;
 import com.als.tog.web.vlogs.form.AddTagForm;
 import com.als.tog.web.vlogs.form.QueryVlogsForm;
 import com.als.tog.web.vlogs.form.VlogForm;
 import com.als.tog.web.vlogs.mapper.TagsMapper;
+import com.als.tog.web.vlogs.mapper.UserInfoMapper;
 import com.als.tog.web.vlogs.mapper.XgdsbMapper;
 import com.als.tog.web.vlogs.service.XgdsbService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -28,6 +30,7 @@ import java.time.LocalDateTime;
 public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements XgdsbService {
 
     private final RedisTemplate<String, Object> redisTemplate;
+    public UserInfoMapper userInfoMapper;
 
     public XgdsbServiceImpl(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -49,12 +52,18 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
 
     @Override
     public void AddVlog(VlogForm form){
+//        LambdaQueryWrapper<UserInfo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        lambdaQueryWrapper.eq(UserInfo::getId,form.getUserId());
+//        UserInfo userInfo = userInfoMapper.selectOne(lambdaQueryWrapper);
         Xgdsb xgdsb = new Xgdsb();
         LocalDateTime now = LocalDateTime.now();
         xgdsb.setTitle(form.getTitle());
         xgdsb.setSummary(form.getSummary());
         xgdsb.setContent(form.getContent());
         xgdsb.setCreateTime(now);
+        xgdsb.setAuthor(form.getAuthor());
+        xgdsb.setUserId(form.getUserId());
+        xgdsb.setTagTypes(form.getTagTypes());
         saveOrUpdate(xgdsb);
     }
 

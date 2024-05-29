@@ -17,7 +17,7 @@ public class Xgdsb implements Serializable {
     private static final long serialVersionUID = 7193486139257172915L;
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
     @TableField("title")
     private String title;
@@ -34,13 +34,11 @@ public class Xgdsb implements Serializable {
     @TableField("tagTypes")
     private String tagTypes;
 
-    public Long getId() {
-        return id;
-    }
+    @TableField("author")
+    private String author;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @TableField("userId")
+    private Long userId;
 
     public String getTitle() {
         return title;

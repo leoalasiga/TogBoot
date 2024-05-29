@@ -29,7 +29,7 @@ public class LoginServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> impl
         lambdaQueryWrapper.eq(UserInfo::getAccount, form.getAccount());
         UserInfo userInfo = baseMapper.selectOne(lambdaQueryWrapper);
         Map<String, Object> map = new HashMap<>(5);
-        map.put("id", userInfo.getId());
+        map.put("id", userInfo.getId()+"");
         map.put("account", userInfo.getAccount());
         String jwtToken = "";
         if(userInfo == null){
