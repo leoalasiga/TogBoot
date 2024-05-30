@@ -37,7 +37,6 @@ public class QueryVlogsForm implements Serializable {
     @ApiModelProperty("标签类型")
     private Integer tagType;
 
-
     @ApiModelProperty("用户标志")
-    private Integer userId;
+    private String userId;
 }

@@ -1,5 +1,6 @@
 package com.als.tog.web.vlogs.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.als.tog.web.vlogs.entity.TagsInfo;
 import com.als.tog.web.vlogs.entity.UserInfo;
 import com.als.tog.web.vlogs.entity.Xgdsb;
@@ -19,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 
 /**
@@ -45,6 +48,9 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
         }
         if(!form.getSummary().isEmpty()){
             wrapper.like(Xgdsb::getSummary, form.getSummary());
+        }
+        if(StrUtil.isNotBlank(form.getUserId())){
+            wrapper.eq(Xgdsb::getUserId,form.getUserId());
         }
         wrapper.orderByDesc(Xgdsb::getCreateTime);
         return baseMapper.selectPage(page, wrapper);
