@@ -1,9 +1,12 @@
 package com.als.tog.web.vlogs.mapper;
 
 import com.als.tog.web.vlogs.entity.Xgdsb;
+import com.als.tog.web.vlogs.form.QueryVlogsForm;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author dkw001
@@ -11,4 +14,5 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 @Mapper
 public interface XgdsbMapper extends BaseMapper<Xgdsb> {
+    IPage<Xgdsb> selectByType(Page<Xgdsb> page, @Param("form") QueryVlogsForm form);
 }

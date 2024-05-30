@@ -16,10 +16,12 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
@@ -32,8 +34,11 @@ import java.time.LocalDateTime;
 @Slf4j
 public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements XgdsbService {
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    public UserInfoMapper userInfoMapper;
+
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
+    @Resource
+    private XgdsbMapper xgdsbMapper;
 
     public XgdsbServiceImpl(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -52,8 +57,13 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
         if(StrUtil.isNotBlank(form.getUserId())){
             wrapper.eq(Xgdsb::getUserId,form.getUserId());
         }
-        wrapper.orderByDesc(Xgdsb::getCreateTime);
-        return baseMapper.selectPage(page, wrapper);
+        if(StrUtil.isNotBlank(form.getTagType())){
+            return xgdsbMapper.selectByType(page,form);
+        } else {
+            wrapper.orderByDesc(Xgdsb::getCreateTime);
+            return baseMapper.selectPage(page, wrapper);
+        }
+
     }
 
     @Override
