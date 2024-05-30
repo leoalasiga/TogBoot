@@ -73,6 +73,9 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
 //        UserInfo userInfo = userInfoMapper.selectOne(lambdaQueryWrapper);
         Xgdsb xgdsb = new Xgdsb();
         LocalDateTime now = LocalDateTime.now();
+        if (StrUtil.isNotBlank(form.getId())){
+            xgdsb.setId(form.getId());
+        }
         xgdsb.setTitle(form.getTitle());
         xgdsb.setSummary(form.getSummary());
         xgdsb.setContent(form.getContent());
