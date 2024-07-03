@@ -49,22 +49,6 @@ public class SwaggerConfig {
 //                .description("令牌")
 //                .required(true)
 //                .build());
-//        parameters.add(new RequestParameterBuilder()
-//                .in(ParameterType.HEADER)
-//                .query(simpleParameterSpecificationBuilder -> simpleParameterSpecificationBuilder
-//                        .model(modelSpecificationBuilder -> modelSpecificationBuilder.scalarModel(ScalarType.STRING))
-//                        .defaultValue("")).name("curOrgCode")
-//                .description("当前组织编码")
-//                .required(true).build());
-//        parameters.add(new RequestParameterBuilder()
-//                .in(ParameterType.HEADER)
-//                .name("curDeptCode")
-//                .query(simpleParameterSpecificationBuilder -> simpleParameterSpecificationBuilder
-//                        .model(modelSpecificationBuilder -> modelSpecificationBuilder.scalarModel(ScalarType.STRING))
-//                        .defaultValue(""))
-//                .description("当前部门编码")
-//                .required(true)
-//                .build());
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(enable)
