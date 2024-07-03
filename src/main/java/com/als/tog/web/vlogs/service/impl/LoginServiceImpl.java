@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.jsonwebtoken.Claims;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -28,18 +30,19 @@ public class LoginServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> impl
         LambdaQueryWrapper<UserInfo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(UserInfo::getAccount, form.getAccount());
         UserInfo userInfo = baseMapper.selectOne(lambdaQueryWrapper);
-        Map<String, Object> map = new HashMap<>(5);
-        map.put("id", userInfo.getId()+"");
-        map.put("account", userInfo.getAccount());
         String jwtToken = "";
         if(userInfo == null){
             ExceptionUtils.throwBusinessException("用户不存在");
-        }
-        if(userInfo!=null && userInfo.getPassWord().equals(form.getPassWord())) {
-            jwtToken = JwtUtils.generateToken(map);
-        }
-        if (userInfo!=null && !userInfo.getPassWord().equals(form.getPassWord())){
-            ExceptionUtils.throwBusinessException("账号或密码不正确");
+        } else {
+            Map<String, Object> map = new HashMap<>(5);
+            map.put("id", userInfo.getId()+"");
+            map.put("account", userInfo.getAccount());
+            if(userInfo!=null && userInfo.getPassWord().equals(form.getPassWord())) {
+                jwtToken = JwtUtils.generateToken(map);
+            }
+            if (userInfo!=null && !userInfo.getPassWord().equals(form.getPassWord())){
+                ExceptionUtils.throwBusinessException("账号或密码不正确");
+            }
         }
         return jwtToken;
     }
@@ -64,6 +67,15 @@ public class LoginServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> impl
         Long id = Long.valueOf(claims.get("id")+"");
         LambdaQueryWrapper<UserInfo> lambdaQueryWrapper = new LambdaQueryWrapper();
         lambdaQueryWrapper.eq(UserInfo::getId , id);
+        userInfo = baseMapper.selectOne(lambdaQueryWrapper);
+        return userInfo;
+    }
+
+    @Override
+    public UserInfo getUserInfoByUserName(String userName) {
+        UserInfo userInfo = new UserInfo();
+        LambdaQueryWrapper<UserInfo> lambdaQueryWrapper = new LambdaQueryWrapper();
+        lambdaQueryWrapper.eq(UserInfo::getAccount , userName);
         userInfo = baseMapper.selectOne(lambdaQueryWrapper);
         return userInfo;
     }

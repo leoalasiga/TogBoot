@@ -52,4 +52,22 @@ public class JwtUtils {
             return null;
         }
     }
+
+    // 根据token获取用户名
+    public String getUserNameFromJwtToken(String token) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody().getAudience();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // 校验token
+    public Boolean validateJwtToken(String token){
+        return true;
+    }
 }

@@ -14,4 +14,6 @@ public interface LoginService extends IService<UserInfo> {
     void register(LoginForm form);
 
     UserInfo getUserInfoByToken(String token);
+
+    UserInfo getUserInfoByUserName(String userName);
 }
