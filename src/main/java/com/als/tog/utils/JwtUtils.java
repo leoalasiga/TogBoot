@@ -54,7 +54,7 @@ public class JwtUtils {
     }
 
     // 根据token获取用户名
-    public String getUserNameFromJwtToken(String token) {
+    public String getUsernameFromToken(String token) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(SECRET_KEY)
@@ -67,7 +67,7 @@ public class JwtUtils {
     }
 
     // 校验token
-    public Boolean validateJwtToken(String token){
+    public Boolean validateToken(String token){
         return true;
     }
 }

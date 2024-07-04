@@ -40,15 +40,15 @@ public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
         List<RequestParameter> parameters = new ArrayList<>();
-//        parameters.add(new RequestParameterBuilder()
-//                .query(simpleParameterSpecificationBuilder -> simpleParameterSpecificationBuilder
-//                        .model(modelSpecificationBuilder -> modelSpecificationBuilder.scalarModel(ScalarType.STRING))
-//                        .defaultValue(""))
-//                .in(ParameterType.HEADER)
-//                .name("token")
-//                .description("令牌")
-//                .required(true)
-//                .build());
+        parameters.add(new RequestParameterBuilder()
+                .query(simpleParameterSpecificationBuilder -> simpleParameterSpecificationBuilder
+                        .model(modelSpecificationBuilder -> modelSpecificationBuilder.scalarModel(ScalarType.STRING))
+                        .defaultValue(""))
+                .in(ParameterType.HEADER)
+                .name("token")
+                .description("令牌")
+                .required(false)
+                .build());
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(enable)
