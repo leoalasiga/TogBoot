@@ -56,6 +56,11 @@ public class JwtUtils {
     // 根据token获取用户名
     public String getUsernameFromToken(String token) {
         try {
+            System.out.println(Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody());
             return Jwts.parserBuilder()
                     .setSigningKey(SECRET_KEY)
                     .build()

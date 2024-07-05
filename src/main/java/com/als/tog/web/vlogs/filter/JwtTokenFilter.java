@@ -1,7 +1,10 @@
 package com.als.tog.web.vlogs.filter;
 
 import com.als.tog.utils.JwtUtils;
+import com.als.tog.web.vlogs.entity.UserInfo;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author dkw
+ */
 @Slf4j
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    private static final String JWT_TOKEN_PREFIX = "Bearer ";
     private final JwtUtils jwtUtils;
 
     public JwtTokenFilter(JwtUtils jwtUtils) {
@@ -32,18 +37,24 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Check if the request is for a Swagger path
+        // 检查是否是swagger地址和login接口
         if ("/togs/user/login".equals(request.getRequestURI()) || isSwaggerRequest(request)) {
             filterChain.doFilter(request, response);
             return;
         }
-        // Parse the JWT from the request header
+        if (response.getStatus()==200){
+            filterChain.doFilter(request, response);
+            return;
+        }
         String jwt = parseJwt(request);
         if (jwt != null && jwtUtils.validateToken(jwt)) {
-            // Get the username from the token and load the user details
-            String username = jwtUtils.getUsernameFromToken(jwt);
-
-            // Create an authenticated token and set it in the SecurityContextHolder
+            Claims claims = JwtUtils.parseToken(jwt);
+            System.out.println(claims);
+            if(claims==null){
+                throw new AuthenticationServiceException("无效的token");
+            } else {
+                filterChain.doFilter(request, response);
+            }
         }
 
         filterChain.doFilter(request, response);
@@ -62,17 +73,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 requestPath.endsWith("favicon.ico");
     }
 
-    private boolean isLoginInterface(HttpServletRequest request) {
-        String requestPath = request.getRequestURI();
-        return requestPath.endsWith("login");
-    }
-
     // 解析jwtToken
     private String parseJwt(HttpServletRequest request) {
-        String headerAuth = request.getHeader("Authorization");
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(JWT_TOKEN_PREFIX)) {
-            return headerAuth.substring(JWT_TOKEN_PREFIX.length());
-        }
-        return null;
+        String headerAuth = request.getHeader("token");
+        return headerAuth;
     }
 }

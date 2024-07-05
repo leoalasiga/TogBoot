@@ -7,10 +7,13 @@ import com.als.tog.web.vlogs.form.LoginForm;
 import com.als.tog.web.vlogs.service.LoginService;
 import com.als.tog.web.vlogs.service.XgdsbService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 
 /**
  * @author dkw

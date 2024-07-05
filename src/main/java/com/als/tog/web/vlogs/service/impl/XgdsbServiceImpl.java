@@ -18,8 +18,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
@@ -44,26 +47,36 @@ public class XgdsbServiceImpl extends ServiceImpl<XgdsbMapper, Xgdsb> implements
         this.redisTemplate = redisTemplate;
     }
 
-    @Override
-    public IPage<Xgdsb> QueryList(QueryVlogsForm form) {
-        LambdaQueryWrapper<Xgdsb> wrapper = new LambdaQueryWrapper();
-        Page<Xgdsb> page=new Page<>(form.getPageIndex(), form.getPageSize());
-        if(!form.getTitle().isEmpty()){
-            wrapper.like(Xgdsb::getTitle, form.getTitle());
-        }
-        if(!form.getSummary().isEmpty()){
-            wrapper.like(Xgdsb::getSummary, form.getSummary());
-        }
-        if(StrUtil.isNotBlank(form.getUserId())){
-            wrapper.eq(Xgdsb::getUserId,form.getUserId());
-        }
-        if(StrUtil.isNotBlank(form.getTagType())){
-            return xgdsbMapper.selectByType(page,form);
-        } else {
-            wrapper.orderByDesc(Xgdsb::getCreateTime);
-            return baseMapper.selectPage(page, wrapper);
-        }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<Xgdsb> QueryList(QueryVlogsForm form) {
+        try {
+            LambdaQueryWrapper<Xgdsb> wrapper = new LambdaQueryWrapper();
+            Page<Xgdsb> page=new Page<>(form.getPageIndex(), form.getPageSize());
+            if(!form.getTitle().isEmpty()){
+                wrapper.like(Xgdsb::getTitle, form.getTitle());
+            }
+            if(!form.getSummary().isEmpty()){
+                wrapper.like(Xgdsb::getSummary, form.getSummary());
+            }
+            if(StrUtil.isNotBlank(form.getUserId())){
+                wrapper.eq(Xgdsb::getUserId,form.getUserId());
+            }
+            if(StrUtil.isNotBlank(form.getTagType())){
+                return xgdsbMapper.selectByType(page,form);
+            } else {
+                wrapper.orderByDesc(Xgdsb::getCreateTime);
+                return baseMapper.selectPage(page, wrapper);
+            }
+        } catch (DataAccessException ex) {
+            // 处理数据访问异常，如果需要回滚事务
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw ex;
+        } catch (Exception ex) {
+            // 处理其他异常
+            throw ex;
+        }
     }
 
     @Override

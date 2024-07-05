@@ -2,23 +2,24 @@ package com.als.tog.config;
 
 import com.als.tog.utils.JwtUtils;
 import com.als.tog.web.vlogs.filter.JwtTokenFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
  * @author dkw
  */
 @Configuration //注解表明这是一个配置类，Spring 将从这个类中读取 Bean 的定义。
 @EnableWebSecurity //注解会启用 Spring Security 的 web 安全支持
-public class SecurityConfig {
+public class SecurityConfig{
 
     private JwtUtils jwtUtils;
 
+    @Autowired
     public SecurityConfig(JwtUtils jwtUtils) {
         this.jwtUtils = jwtUtils;
     }
@@ -38,7 +39,7 @@ public class SecurityConfig {
                 // 放行
                 .antMatchers("/**/*.html").permitAll()
                 .antMatchers( "/login","css/**","/js/**","/image/*").permitAll()
-                .antMatchers("/togs/user/login").permitAll()
+                .antMatchers("/user/login").permitAll()
                 .anyRequest().authenticated() // 配置所有未被明确授权的请求都需要经过身份验证
                 )
                 .csrf().disable(); // 禁用 CSRF 保护，Swagger UI 不支持 CSRF 保护

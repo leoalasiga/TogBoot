@@ -7,11 +7,12 @@ import com.als.tog.web.vlogs.form.LoginForm;
 import com.als.tog.web.vlogs.mapper.UserInfoMapper;
 import com.als.tog.web.vlogs.service.LoginService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class LoginServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements LoginService {
 
 
+    // 将用户信息存储
     @Override
     public String login(LoginForm form) {
         LambdaQueryWrapper<UserInfo> lambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -57,6 +59,7 @@ public class LoginServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> impl
 
     @Override
     public UserInfo getUserInfoByToken(String token) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Claims claims = null;
         try {
             claims = JwtUtils.parseToken(token);
