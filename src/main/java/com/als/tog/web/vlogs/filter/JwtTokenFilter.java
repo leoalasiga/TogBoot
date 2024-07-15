@@ -33,23 +33,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
     }
 
+    // 在这里不进行筛选，所有的接口最终都会放行，在filter中只进行对token的解析和用户身份验证
+    // 比如token无效后，抛出token无效的错误
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
-        // 检查是否是swagger地址和login接口
-        if ("/togs/user/login".equals(request.getRequestURI()) || isSwaggerRequest(request)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        if (response.getStatus()==200){
-            filterChain.doFilter(request, response);
-            return;
-        }
         String jwt = parseJwt(request);
         if (jwt != null && jwtUtils.validateToken(jwt)) {
             Claims claims = JwtUtils.parseToken(jwt);
-            System.out.println(claims);
             if(claims==null){
                 throw new AuthenticationServiceException("无效的token");
             } else {
@@ -60,18 +51,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private boolean isSwaggerRequest(HttpServletRequest request) {
-        String requestPath = request.getRequestURI();
-        return requestPath.startsWith("/swagger-ui") ||
-                requestPath.startsWith("/webjars") ||
-                requestPath.startsWith("/v3/api-docs") ||
-                requestPath.startsWith("/v2/api-docs") ||
-                requestPath.startsWith("/swagger-resources") ||
-                requestPath.startsWith("/configuration") ||
-                requestPath.endsWith(".js") ||
-                requestPath.endsWith(".css") ||
-                requestPath.endsWith("favicon.ico");
-    }
 
     // 解析jwtToken
     private String parseJwt(HttpServletRequest request) {
