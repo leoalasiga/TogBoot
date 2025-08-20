@@ -50,3 +50,4 @@ rebel.xml
 
 # 项目日志
 /logs/
+/src/main/resources/application-test.yml

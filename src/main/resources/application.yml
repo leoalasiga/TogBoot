@@ -19,8 +19,8 @@ server:
 spring:
   application:
     name: ${APP_NAME:TogBoot}
-#  profiles:
-#    active: dev
+  profiles:
+    active: test
   # 数据源配置项
   datasource:
     url: ${DB_URL:jdbc:jdbc:mysql://127.0.0.1:3306/tog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&nullCatalogMeansCurrent=false}
